@@ -29,7 +29,6 @@ public class Util {
                 s.append(" às ");
 
             s.append(dataAtual[i].format(data));
-
             i++;
         }
 
