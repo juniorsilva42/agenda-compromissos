@@ -11,4 +11,19 @@ public class HorarioAtributos {
     public void setHorario(String[] horario) {
         this.horario = horario;
     }
+
+    public int obtemTamanho (){
+        return this.horario.length;
+    }
+
+    @Override
+    public String toString (){
+        StringBuilder s = new StringBuilder();
+        for (int i = 0; i < this.obtemTamanho(); i++){
+            if (this.horario[i] != null)
+                s.append(this.horario[i]);
+        }
+
+        return s.toString();
+    }
 }

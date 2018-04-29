@@ -1,6 +1,6 @@
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Scanner;
+import java.util.*;
 
 import com.br.ivaniciojr.agenda.*;
 
@@ -13,46 +13,61 @@ public class Main {
     private static DataAtributos data = new DataAtributos();
     private static HorarioAtributos horario = new HorarioAtributos();
 
-    private static SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
 
         util.screen();
-
-        // Limpa o buffer do teclado
         in.nextLine();
 
-        agendarCompromisso();
-
-    }
-
-    public static void agendarCompromisso() {
+        // Dados do compromisso para povoar suas respectivas estruturas
         String titulo, descricao, dataCompromisso;
+        String[] horarioCompromisso = new String[2];
 
-        System.out.println("Passo 1/3\nTítulo do compromisso:");
+        List<AgendaAtributos> lista = new ArrayList<AgendaAtributos>();
+
+        /*
+         *
+         * Povoando os dados do compromisso
+         * */
+        System.out.println("Passo 1/4\nTítulo do compromisso:");
         titulo = in.nextLine();
         agenda.setTitulo(titulo);
 
-        System.out.println("Passo 2/3\nDescrição do compromisso:");
+        System.out.println("Passo 2/4\nDescrição do compromisso:");
         descricao = in.nextLine();
         agenda.setDescricao(descricao);
 
-        System.out.println("Passo 3/3\nData do compromisso:");
+        System.out.println("Passo 3/4\nData do compromisso:");
         dataCompromisso = in.nextLine();
 
-        // válida
-        if (util.verificaData(agenda.obtemData())){
+        if (util.verificaData(dataCompromisso)){
             data.setData(dataCompromisso);
             agenda.setData(data);
         } else {
-            System.out.println("OPS! Data inválida!");
+            data.setData(null);
+            agenda.setData(data);
         }
 
+        System.out.println("Passo 4/4\nHorário de ínicio e fim: (no formato H:m)");
+        for (int i = 0; i < horarioCompromisso.length; i++){
+            horarioCompromisso[i] = in.nextLine();
+            horario.setHorario(horarioCompromisso);
+            agenda.setHorario(horario);
+        }
 
-
+        lista.add(agenda);
+        exibeCompromissos(Collections.singletonList(agenda));
     }
 
-    public static void cancelarCompromisso() {
-        System.out.println("Vamos cancelar?!");
+    public static void exibeCompromissos (List<AgendaAtributos> items){
+        int i, tamanhoLista = items.size();
+
+        for (i = 0; i < tamanhoLista; i++) {
+            AgendaAtributos agenda = items.get(i);
+            System.out.println("\nTítulo: "+agenda.getTitulo());
+            System.out.println("Descrição: "+agenda.getDescricao());
+            System.out.println("Data: "+agenda.obtemData());
+            System.out.println("Horário: "+agenda.getHorario().toString());
+            System.out.println("-----------------------------------------------");
+        }
     }
 }
