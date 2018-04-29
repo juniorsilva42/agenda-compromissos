@@ -1,5 +1,3 @@
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 import com.br.ivaniciojr.agenda.*;
@@ -18,7 +16,14 @@ public class Main {
         util.screen();
         in.nextLine();
 
-        // Dados do compromisso para povoar suas respectivas estruturas
+        /*
+        *
+        * Dados do compromisso para povoar suas respectivas estruturas
+        *
+        * titulo, descrição e dataCompromisso, recebem seus respectivos valores mediante o usuário para povoar toda a estrutura;
+        * horarioCompromisso[]: vetor responsável por armazenar o horário de inicio e fim do compromisso;
+        *
+        * */
         String titulo, descricao, dataCompromisso;
         String[] horarioCompromisso = new String[2];
 
@@ -32,11 +37,11 @@ public class Main {
         titulo = in.nextLine();
         agenda.setTitulo(titulo);
 
-        System.out.println("Passo 2/4\nDescrição do compromisso:");
+        System.out.println("\nPasso 2/4\nDescrição do compromisso:");
         descricao = in.nextLine();
         agenda.setDescricao(descricao);
 
-        System.out.println("Passo 3/4\nData do compromisso:");
+        System.out.println("\nPasso 3/4\nData do compromisso:");
         dataCompromisso = in.nextLine();
 
         if (util.verificaData(dataCompromisso)){
@@ -47,7 +52,8 @@ public class Main {
             agenda.setData(data);
         }
 
-        System.out.println("Passo 4/4\nHorário de ínicio e fim: (no formato H:m)");
+        System.out.println("\nPasso 4/4\nHorário de ínicio e fim: (no formato 00h00)");
+
         for (int i = 0; i < horarioCompromisso.length; i++){
             horarioCompromisso[i] = in.nextLine();
             horario.setHorario(horarioCompromisso);

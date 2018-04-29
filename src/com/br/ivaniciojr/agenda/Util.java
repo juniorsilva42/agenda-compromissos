@@ -1,5 +1,6 @@
 package com.br.ivaniciojr.agenda;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.time.format.DateTimeFormatter;
@@ -49,6 +50,18 @@ public class Util {
         } catch (DateTimeParseException e) {
             return false;
         }
+    }
+
+    public static boolean validaHora (String horario) {
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+        // desadapto a classe para números muito grandes, isso anula a possibilidade de colocar um valor como "25h" e ele somar e considerar como 01h00 da manhã, por exemplo
+        sdf.setLenient(false);
+        try{
+            sdf.parse(horario);
+        }catch(ParseException e){
+            return false;
+        }
+        return true;
     }
 
 }
