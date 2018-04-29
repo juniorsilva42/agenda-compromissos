@@ -7,7 +7,7 @@ public class AgendaAtributos {
     * Arcabouço da estrutura
     *
     * */
-    private String nome;
+    private String titulo;
     private String descricao;
     private DataAtributos data;
     private HorarioAtributos horario;
@@ -17,12 +17,12 @@ public class AgendaAtributos {
     * Getters e setters
     *
     * */
-    public String getNome() {
-        return nome;
+    public String getTitulo() {
+        return titulo;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
     }
 
     public String getDescricao() {
