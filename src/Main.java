@@ -18,14 +18,19 @@ public class Main {
         util.screen();
         in.nextLine();
 
+        addCompromisso();
+    }
+
+    public static void addCompromisso (){
+
         /*
-        *
-        * Dados do compromisso para povoar suas respectivas estruturas
-        *
-        * titulo, descrição e dataCompromisso, recebem seus respectivos valores mediante o usuário para povoar toda a estrutura;
-        * horarioCompromisso[]: vetor responsável por armazenar o horário de inicio e fim do compromisso;
-        *
-        * */
+         *
+         * Dados do compromisso para povoar suas respectivas estruturas
+         *
+         * titulo, descrição e dataCompromisso, recebem seus respectivos valores mediante o usuário para povoar toda a estrutura;
+         * horarioCompromisso[]: vetor responsável por armazenar o horário de inicio e fim do compromisso;
+         *
+         * */
         String titulo, descricao, dataCompromisso;
         String[] horarioCompromisso = new String[2];
 
@@ -38,16 +43,26 @@ public class Main {
          * */
         System.out.println("Passo 1/4\nTítulo do compromisso:");
         titulo = in.nextLine();
-        agenda.setTitulo(titulo);
+
+        if (util.validaString(titulo))
+            agenda.setTitulo(titulo);
 
         System.out.println("\nPasso 2/4\nDescrição do compromisso:");
         descricao = in.nextLine();
-        agenda.setDescricao(descricao);
+
+        if (util.validaString(descricao))
+            agenda.setDescricao(descricao);
+
 
         System.out.println("\nPasso 3/4\nData do compromisso: (deixar vazio para caso queira utilizar a data atual)");
         dataCompromisso = in.nextLine();
 
-        // data vazia
+        /*
+         *
+         * Caso a data seja vazia, integra, por default, a data atual à estrutura, caso contrário, cai no bloco do else e apenas verifica se a data passada pelo usuário lida em dataCompromisso, entra nos parâmetros de validação, caso seja verdadeiro, integra à estrutura, caso não, integra o valor null;
+         *
+         *
+         * */
         if (!(util.validaString(dataCompromisso))){
             SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
             data.setData(df.format(date));
@@ -78,6 +93,7 @@ public class Main {
 
         lista.add(agenda);
         exibeCompromissos(Collections.singletonList(agenda));
+
     }
 
     public static void exibeCompromissos (List<AgendaAtributos> items){
