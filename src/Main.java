@@ -16,9 +16,39 @@ public class Main {
     public static void main(String[] args) {
 
         util.screen();
-        in.nextLine();
 
-        addCompromisso();
+        int opcao;
+
+        System.out.println("Digite uma opção correspondente acima: ");
+        opcao = in.nextInt();
+
+        switch (opcao) {
+            case 1:
+                System.out.println("\nADICIONAR UM COMPROMISSO");
+                System.out.println("------------------------------------------");
+
+                // Limpa o buffer do teclado
+                in.nextLine();
+                addCompromisso();
+                break;
+
+            case 2:
+                System.out.println("Cancelar");
+                break;
+
+            case 3:
+                System.out.println("Ver");
+                break;
+
+            case 4:
+                System.out.println("Saindo...");
+                break;
+
+            default:
+                System.out.println("Opção inválida!");
+        }
+
+        exibeCompromissos(Collections.singletonList(agenda));
     }
 
     public static void addCompromisso (){
@@ -92,8 +122,6 @@ public class Main {
         }
 
         lista.add(agenda);
-        exibeCompromissos(Collections.singletonList(agenda));
-
     }
 
     public static void exibeCompromissos (List<AgendaAtributos> items){
@@ -107,5 +135,9 @@ public class Main {
             System.out.println("Horário: "+agenda.getHorario().toString());
             System.out.println("-----------------------------------------------");
         }
+    }
+
+    public static void removeCompromisso (List<AgendaAtributos> item){
+
     }
 }

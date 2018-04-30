@@ -14,8 +14,8 @@ public class Util {
         System.out.println("MINHA AGENDA");
         System.out.println("Hoje, "+this.exibeData());
         System.out.println("---------------------------------------------------------------------");
-        System.out.println("O que deseja fazer? (digite uma opção correspondente)\n");
-        System.out.println("1. Agendar um compromisso\n2. Cancelar um compromisso\n3. Ver meus compromissos");
+        System.out.println("O que deseja fazer?\n");
+        System.out.println("1. Agendar um compromisso\n2. Cancelar um compromisso\n3. Ver meus compromissos\n4. Sair da agenda");
         System.out.println("=====================================================================\n");
     }
 
