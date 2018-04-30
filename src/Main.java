@@ -1,3 +1,5 @@
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 import com.br.ivaniciojr.agenda.*;
@@ -28,6 +30,7 @@ public class Main {
         String[] horarioCompromisso = new String[2];
 
         List<AgendaAtributos> lista = new ArrayList<AgendaAtributos>();
+        Date date = new Date();
 
         /*
          *
@@ -41,23 +44,36 @@ public class Main {
         descricao = in.nextLine();
         agenda.setDescricao(descricao);
 
-        System.out.println("\nPasso 3/4\nData do compromisso:");
+        System.out.println("\nPasso 3/4\nData do compromisso: (deixar vazio para caso queira utilizar a data atual)");
         dataCompromisso = in.nextLine();
 
-        if (util.verificaData(dataCompromisso)){
-            data.setData(dataCompromisso);
+        // data vazia
+        if (!(util.validaString(dataCompromisso))){
+            SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+            data.setData(df.format(date));
             agenda.setData(data);
         } else {
-            data.setData(null);
-            agenda.setData(data);
+            if (util.validaData(dataCompromisso)){
+                data.setData(dataCompromisso);
+                agenda.setData(data);
+            } else {
+                data.setData(null);
+                agenda.setData(data);
+            }
         }
 
-        System.out.println("\nPasso 4/4\nHorário de ínicio e fim: (no formato 00h00)");
+        System.out.println("\nPasso 4/4\nHorário de ínicio e fim: (no formato 00:00)");
 
         for (int i = 0; i < horarioCompromisso.length; i++){
             horarioCompromisso[i] = in.nextLine();
-            horario.setHorario(horarioCompromisso);
-            agenda.setHorario(horario);
+
+            if (util.validaHorario(horarioCompromisso[i])){
+                horario.setHorario(horarioCompromisso);
+                agenda.setHorario(horario);
+            } else {
+                horario.setHorario(null);
+                agenda.setHorario(horario);
+            }
         }
 
         lista.add(agenda);

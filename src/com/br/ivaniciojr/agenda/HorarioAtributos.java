@@ -21,7 +21,7 @@ public class HorarioAtributos {
         StringBuilder s = new StringBuilder();
         for (int i = 0; i < this.obtemTamanho(); i++){
             if (this.horario[i] != null)
-                s.append(this.horario[i]);
+                s.append(this.horario[i]+"\n");
         }
 
         return s.toString();
