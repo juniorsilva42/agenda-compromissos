@@ -1,11 +1,11 @@
 package com.br.ivaniciojr.agenda;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.time.format.DateTimeFormatter;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
+import java.util.*;
 
 public class Util {
 
@@ -98,6 +98,10 @@ public class Util {
             return false;
 
         return true;
+    }
+
+    public static void limpaBuffer (Scanner in){
+        in.nextLine();
     }
 
 }
