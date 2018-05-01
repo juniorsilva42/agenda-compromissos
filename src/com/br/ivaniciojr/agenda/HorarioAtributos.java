@@ -1,5 +1,8 @@
 package com.br.ivaniciojr.agenda;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class HorarioAtributos {
 
     private String[] horario;
@@ -17,13 +20,24 @@ public class HorarioAtributos {
     }
 
     @Override
-    public String toString (){
+    public String toString () {
         StringBuilder s = new StringBuilder();
-        for (int i = 0; i < this.obtemTamanho(); i++){
-            if (this.horario[i] != null)
-                s.append(this.horario[i]+"\n");
-        }
 
+        s.append(" das "+this.horario[0]+" às "+this.horario[1]);
+
+        return s.toString();
+    }
+
+    public String relacaoHorarios (){
+        List<String> relacaoDeHorarios = new ArrayList<>();
+
+        StringBuilder s = new StringBuilder();
+
+        for (int i = 0; i < this.obtemTamanho(); i++){
+            relacaoDeHorarios.add(this.horario[i]);
+
+            s.append(relacaoDeHorarios.get(i));
+        }
         return s.toString();
     }
 }

@@ -29,16 +29,25 @@ public class Main {
                     System.out.println("------------------------------------------");
 
                     // Limpa o buffer do teclado
-                    util.limpaBuffer(in);
+                    Util.limpaBuffer(in);
                     addCompromisso();
                     break;
 
                 case 2:
-                    System.out.println("Cancelar");
+
+                    System.out.println("Qual compromisso deseja remover?");
+                    opcao = in.nextInt();
+                    opcao = opcao - 1;
+
+                    // Limpa o buffer do teclado
+                    Util.limpaBuffer(in);
+                    removeCompromisso(opcao);
+
                     break;
 
                 case 3:
-                    exibeCompromissos();
+                    //exibeCompromissos();
+                    retornaTodasOsHorarios();
                     break;
 
                 case 4:
@@ -172,7 +181,7 @@ public class Main {
             System.out.println("Deseja adicionar um novo compromisso? (s/n)");
             String opt;
 
-            util.limpaBuffer(in);
+            Util.limpaBuffer(in);
             opt = in.nextLine();
 
             System.out.print("\n");
@@ -186,6 +195,7 @@ public class Main {
         } else {
             for (int i = 0; i < lista.size(); i++) {
                 AgendaAtributos agenda = lista.get(i);
+                System.out.print("-----------------------------------------------");
                 System.out.println("\nTítulo: "+agenda.getTitulo());
                 System.out.println("Descrição: "+agenda.getDescricao());
                 System.out.println("Data: "+agenda.obtemData());
@@ -199,16 +209,30 @@ public class Main {
         int tamanhoLista = lista.size()-1;
         AgendaAtributos agenda = lista.get(tamanhoLista);
 
-        System.out.print("\n|----------------------------------------------------------|");
-        System.out.println("\n|SEU COMPROMISSO PARA O DIA "+agenda.obtemData());
-        System.out.print("\n|                                                          |");
-        System.out.println("------------------------------------------");
-        System.out.println("Titulo do último compromisso: "+lista.get(lista.size()-1).getTitulo());
+        System.out.print("\n|-----------------------------------------------------------|");
+        System.out.println("\n|\tNovo compromisso em "+agenda.obtemData()+""+agenda.getHorario().toString()+" \t\t|");
+        System.out.println("|-----------------------------------------------------------|");
     }
 
     public static void removeCompromisso (int indice){
-        //int i, tamanhoLista = itens.size();
+        int tamanhoLista = lista.size();
 
-        //System.out.println(itens.get(indice).getTitulo());
+        for (int i = 0; i < tamanhoLista; i++) {
+            AgendaAtributos agenda = lista.get(i);
+            System.out.print("-----------------------------------------------");
+            System.out.println("\nCompromisso: "+agenda.getTitulo());
+            System.out.println("-----------------------------------------------");
+        }
+
+        System.out.println("Quero remover este: "+lista.get(indice).getTitulo());
+    }
+
+    public static void retornaTodasOsHorarios (){
+
+        for (int i = 0; i < lista.size(); i++) {
+            AgendaAtributos agenda = lista.get(i);
+
+            System.out.println(agenda.getHorario().relacaoHorarios());
+        }
     }
 }

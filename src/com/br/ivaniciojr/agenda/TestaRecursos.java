@@ -2,29 +2,46 @@ package com.br.ivaniciojr.agenda;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.logging.Logger;
 
 public class TestaRecursos {
 
-    public static void main(String[] args) {
-        System.out.print("\n|-----------------------------------------------------------|");
-        System.out.println("\n|\tNovo compromisso em 24/04/2018 das 10:30 às 11:30\t\t|");
-        System.out.print("|-----------------------------------------------------------|\n");
-        System.out.print("|\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t|\n");
-        System.out.print("|\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t|\n");
-        System.out.print("|\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t|\n");
-        System.out.println("|-----------------------------------------------------------|");
-    }
+    public static void main(String[] args) throws ParseException {
+        SimpleDateFormat formatador = new SimpleDateFormat("HH:mm");
 
-    public static boolean validaHora2 (String horario) {
-        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+        String[] horarioCompromissoAgora = { "10:30", "11:30" };
+        String[] listaDeHorarios = { "11:30", "12:30", "10:11", "15:30"};
 
-        sdf.setLenient(false);
-        try{
-            sdf.parse(horario);
-        }catch(ParseException e){
-            return false;
+
+        for (int i = 0; i < horarioCompromissoAgora.length; i++) {
+
         }
-        return true;
+
+        Date ha = formatador.parse(horarioCompromissoAgora[0]);
+        Date hb = formatador.parse(horarioCompromissoAgora[1]);
+
+        long hinicial =  ha.getTime();
+        long hfinal = hb.getTime();
+
+        if (hinicial == hfinal){
+            System.out.println("Você n pode iniciar uma tarefa em um determinado horário e terminar nesse mesmo determinado horário.");
+        }
+
+        Date dAgora = new Date();
+        Date dMin = formatador.parse("10:30");
+        Date dMax = formatador.parse("9:30");
+
+        if ((dAgora.getTime() > dMin.getTime()) && (dAgora.getTime() < dMax.getTime())){
+
+        }
+        else
+        {
+
+        }
     }
+
+
 }
