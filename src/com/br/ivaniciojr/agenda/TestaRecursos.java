@@ -7,9 +7,13 @@ import java.util.Date;
 public class TestaRecursos {
 
     public static void main(String[] args) {
-        Date date = new Date();
-        SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-        System.out.println(df.format(date));
+        System.out.print("\n|-----------------------------------------------------------|");
+        System.out.println("\n|\tNovo compromisso em 24/04/2018 das 10:30 às 11:30\t\t|");
+        System.out.print("|-----------------------------------------------------------|\n");
+        System.out.print("|\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t|\n");
+        System.out.print("|\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t|\n");
+        System.out.print("|\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t|\n");
+        System.out.println("|-----------------------------------------------------------|");
     }
 
     public static boolean validaHora2 (String horario) {

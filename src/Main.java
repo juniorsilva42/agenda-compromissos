@@ -9,49 +9,56 @@ public class Main {
     private static Scanner in = new Scanner(System.in);
     private static Util util = new Util();
 
-    private static AgendaAtributos agenda = new AgendaAtributos();
-    private static DataAtributos data = new DataAtributos();
-    private static HorarioAtributos horario = new HorarioAtributos();
-
-    private static List<AgendaAtributos> lista = new ArrayList<AgendaAtributos>();
+    private static List<AgendaAtributos> lista = new ArrayList<>();
 
     public static void main(String[] args) {
 
-        util.screen();
-
         int opcao;
 
-        System.out.println("Digite uma opção correspondente acima: ");
-        opcao = in.nextInt();
+        util.screen();
 
-        switch (opcao) {
-            case 1:
-                System.out.println("\nADICIONAR UM COMPROMISSO");
-                System.out.println("------------------------------------------");
+        do {
 
-                // Limpa o buffer do teclado
-                util.limpaBuffer(in);
-                addCompromisso();
-                break;
+            System.out.println("\nDigite uma opção correspondente acima: ");
+            opcao = in.nextInt();
 
-            case 2:
-                System.out.println("Cancelar");
-                break;
+            switch (opcao) {
+                case 1:
+                    System.out.print("\n------------------------------------------");
+                    System.out.println("\nADICIONAR UM COMPROMISSO");
+                    System.out.println("------------------------------------------");
 
-            case 3:
-                exibeCompromissos(Collections.singletonList(agenda));
-                break;
+                    // Limpa o buffer do teclado
+                    util.limpaBuffer(in);
+                    addCompromisso();
+                    break;
 
-            case 4:
-                System.out.println("Saindo...");
-                break;
+                case 2:
+                    System.out.println("Cancelar");
+                    break;
 
-            default:
-                System.out.println("Opção inválida!");
-        }
+                case 3:
+                    exibeCompromissos();
+                    break;
+
+                case 4:
+                    System.out.println("Saindo...");
+                    System.exit(0);
+                    break;
+
+                default:
+                    System.out.println("Opção inválida!");
+            }
+
+        } while (opcao != 4);
+
     }
 
     public static void addCompromisso () {
+
+        AgendaAtributos agenda = new AgendaAtributos();
+        DataAtributos data = new DataAtributos();
+        HorarioAtributos horario = new HorarioAtributos();
 
         /*
          *
@@ -143,23 +150,24 @@ public class Main {
          * Persiste o compromisso à lista
          *
          * */
-        if (lista.add(agenda)) {
+        if (lista.add(agenda))
             System.out.println("\nCompromisso adicionado com sucesso!");
-            exibeUltimoCompromisso();
-        } else {
-            System.out.println("Erro ao adicionar o compromisso!");
-        }
+        else
+            System.out.println("Erro ao adicionar um novo compromisso!");
+
+        exibeUltimoCompromisso();
     }
 
-    public static void exibeCompromissos (List<AgendaAtributos> items){
-        int i, tamanhoLista = items.size();
+    public static void exibeCompromissos (){
+
+        int tamanhoLista = lista.size();
 
         /*
         *
         * Verifica a existência de um compromisso na lista, caso não exista, oferece a opção de criar um.
         *
-        * */
-        if ((tamanhoLista-1) == 0){
+        **/
+        if (tamanhoLista == 0){
             System.out.println("\nAinda não há compromissos.");
             System.out.println("Deseja adicionar um novo compromisso? (s/n)");
             String opt;
@@ -176,8 +184,8 @@ public class Main {
                 System.exit(0);
 
         } else {
-            for (i = 0; i < tamanhoLista; i++) {
-                AgendaAtributos agenda = items.get(i);
+            for (int i = 0; i < lista.size(); i++) {
+                AgendaAtributos agenda = lista.get(i);
                 System.out.println("\nTítulo: "+agenda.getTitulo());
                 System.out.println("Descrição: "+agenda.getDescricao());
                 System.out.println("Data: "+agenda.obtemData());
@@ -188,10 +196,19 @@ public class Main {
     }
 
     public static void exibeUltimoCompromisso (){
-         System.out.println("Titulo do último compromisso: "+lista.get(lista.size()-1).getTitulo());
+        int tamanhoLista = lista.size()-1;
+        AgendaAtributos agenda = lista.get(tamanhoLista);
+
+        System.out.print("\n|----------------------------------------------------------|");
+        System.out.println("\n|SEU COMPROMISSO PARA O DIA "+agenda.obtemData());
+        System.out.print("\n|                                                          |");
+        System.out.println("------------------------------------------");
+        System.out.println("Titulo do último compromisso: "+lista.get(lista.size()-1).getTitulo());
     }
 
-    public static void removeCompromisso (List<AgendaAtributos> item){
+    public static void removeCompromisso (int indice){
+        //int i, tamanhoLista = itens.size();
 
+        //System.out.println(itens.get(indice).getTitulo());
     }
 }
