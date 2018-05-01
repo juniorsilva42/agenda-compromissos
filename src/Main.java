@@ -7,16 +7,22 @@ import com.br.ivaniciojr.agenda.*;
 public class Main {
 
     private static Scanner in = new Scanner(System.in);
-    private static Util util = new Util();
+    private static Date date = new Date();
 
     private static List<AgendaAtributos> lista = new ArrayList<>();
+    private static int tamanhoLista;
 
     public static void main(String[] args) {
 
+        Util.screen();
+
         int opcao;
 
-        util.screen();
-
+        /*
+         *
+         * Executa este laço enquanto a ooção for diferente de 4: sair do sistema.
+         *
+         * */
         do {
         	
             System.out.println("\nDigite uma opção correspondente acima: ");
@@ -36,15 +42,24 @@ public class Main {
                 case 2:
                 
                     Util.limpaBuffer(in);
-                    
+
+                    /*
+                    *
+                    * Verifica se há compromissos
+                    * */
                 	if (!verificaCompromissos()) {
                 		System.out.println("\nAinda não há compromissos na sua agenda.\nAdicione um digitando a opção correspondente no menu (1).\n");
                 	} else {
+                        /*
+                         *
+                         * Exibe apenas o titulo de cada compromisso seguido de sua opção numérica.
+                         * */
                     	exibeCompromissosLite();
 
                     	/*
                     	*
-                    	* Note que, visualmente, é exibido uma lista númerica crescente como opções para o usuário escolher qual comprimisso quer deletar, mas, por trás, é decrementado um da opção a qual ele passa para poder trabalhar com coerência com os índices do array e assim, posteriomente, passar para o argumento da função de remover um compromisso.
+                    	* Note que, visualmente, é exibido uma lista númerica crescente com opções para o usuário escolher qual compromisso quer deletar, mas, por trás dos panos, é decrementado uma unidade da opção a qual ele passa na opção, para assim poder trabalhar com coerência na manipulação dos índices do array e, posteriomente, passar para o argumento da função de remover um compromisso.
+                    	*
                     	* */
                         System.out.println("Qual compromisso deseja cancelar?");
                         opcao = in.nextInt();
@@ -60,20 +75,23 @@ public class Main {
                     break;
 
                 case 4:
-                    System.out.println("Saindo...");
+                    System.out.println("\nSaindo...");
                     System.exit(0);
                     break;
 
                 default:
-                    System.out.println("Opção inválida!");
+                    System.out.println("\nOpção inválida!");
             }
 
         } while (opcao != 4);
-
     }
 
     public static void addCompromisso () {
-
+        /*
+         *
+         * Cria uma instância dos 3 objetos da estrutura para cada compromisso adicionado
+         *
+         * */
         AgendaAtributos agenda = new AgendaAtributos();
         DataAtributos data = new DataAtributos();
         HorarioAtributos horario = new HorarioAtributos();
@@ -89,7 +107,9 @@ public class Main {
         String titulo, descricao, dataCompromisso;
         String[] horarioCompromisso = new String[2];
 
-        Date date = new Date();
+        // Variáveis de controle de erros
+        boolean validadeDeHorario = true;
+        boolean validadeDeData = true;
 
         /*
          *
@@ -99,13 +119,13 @@ public class Main {
         System.out.println("Passo 1/4\nTítulo do compromisso:");
         titulo = in.nextLine();
 
-        if (util.validaString(titulo))
+        if (Util.validaString(titulo))
             agenda.setTitulo(titulo);
 
         System.out.println("\nPasso 2/4\nDescrição do compromisso:");
         descricao = in.nextLine();
 
-        if (util.validaString(descricao))
+        if (Util.validaString(descricao))
             agenda.setDescricao(descricao);
 
         /*
@@ -120,20 +140,17 @@ public class Main {
          *
          * Caso a data seja vazia, integra, por default, a data atual à estrutura, caso contrário, cai no bloco do else e apenas verifica se a data passada pelo usuário lida em dataCompromisso, entra nos parâmetros de validação, caso seja verdadeiro, integra à estrutura, caso não, integra o valor null;
          *
-         *
          * */
-        if (!(util.validaString(dataCompromisso))) {
+        if (!(Util.validaString(dataCompromisso))) {
             SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
             data.setData(df.format(date));
             agenda.setData(data);
         } else {
-            if (util.validaData(dataCompromisso)) {
+            if (Util.validaData(dataCompromisso)) {
                 data.setData(dataCompromisso);
                 agenda.setData(data);
-            } else {
-                data.setData(null);
-                agenda.setData(data);
-            }
+            } else
+                validadeDeData = false;
         }
 
         /*
@@ -143,40 +160,43 @@ public class Main {
          * */
         System.out.println("\nPasso 4/4\nHorário de ínicio e fim: (no formato 00:00)");
 
-        // Percorre o vetor do horário
-        for (int i = 0; i < horarioCompromisso.length; i++) {
+        // Percorre o vetor dos horários
+        for (int i = 0; i < 2; i++) {
             // faz a leitura a partir da entrada do usuário
             horarioCompromisso[i] = in.nextLine();
 
-
             /*
              *
-             * Valida o horário utilizando nossa função helper de validação, caso true, adiciona o horário à estrutra, caso false, adiciona null à estrutura.
+             * Valida o horário utilizando nossa função helper de validação, caso true, adiciona o horário à estrutra, caso false, adiciona null.
              *
              * */
-            if (util.validaHorario(horarioCompromisso[i])) {
+            if (Util.validaHorario(horarioCompromisso[i])) {
                 horario.setHorario(horarioCompromisso);
                 agenda.setHorario(horario);
-            } else {
-                horario.setHorario(null);
-                agenda.setHorario(horario);
-            }
+            } else
+                 validadeDeHorario = false;
         }
 
-        /*
-         *
-         * Persiste o compromisso à lista
-         *
-         * */
-        if (lista.add(agenda)) {
-            System.out.print("\n-----------------------------------------------------------------------");
-            System.out.println("\nOK! \""+agenda.getTitulo()+"\" foi agendado para "+agenda.obtemData()+""+agenda.getHorario().toString()+"");
-            System.out.println("-----------------------------------------------------------------------");
-         } else {
-            System.out.println("Erro ao adicionar um novo compromisso!");
-         }
+        // Valida de forma uniciada, o formato de entrada da data e do horário
+        if (!validadeDeData){
+            System.out.println("\nNão foi possível adicionar seu compromisso.\nHora inválida!");
+        } else if (!validadeDeHorario) {
+            System.out.println("\nNão foi possível adicionar seu compromisso.\nHorário inválido!");
+        } else {
+            /*
+             *
+             * Persiste o compromisso à lista
+             *
+             * */
+            if (lista.add(agenda)) {
+                System.out.print("\n-----------------------------------------------------------------------");
+                System.out.println("\nOK! \""+agenda.getTitulo()+"\" foi agendado para "+agenda.obtemData()+""+agenda.getHorario().toString()+"");
+                System.out.println("-----------------------------------------------------------------------");
+            } else {
+                System.out.println("Erro ao adicionar um novo compromisso!");
+            }
+        }
     }
-
 
     public static void exibeCompromissos (){
 
@@ -213,14 +233,14 @@ public class Main {
      * */
     public static void removeCompromisso (int indice){
         // recalculando o tamanho da lista
-        int tamanhoLista = lista.size();
+        tamanhoLista = lista.size();
 
-        System.out.println("Quero remover este: "+lista.get(indice).getTitulo());
+        System.out.println("\nRemovendo o compromisso: "+lista.get(indice).getTitulo());
 
-        // Verifica se o índice passado é maior do que o tamanho da lista, caso seja, o elemento ultrapassa o limite.
-        if ((indice > tamanhoLista)) {
-        	System.out.println("Este elemento não existe");
-        } else {
+        // verifica a existênca da posição
+        if (indice > tamanhoLista-1)
+            throw new IllegalArgumentException("\nPosição inválida!");
+        else {
         	lista.remove(indice);
         	System.out.println("Compromisso removido com sucesso!");
         }
@@ -233,15 +253,6 @@ public class Main {
             AgendaAtributos agenda = lista.get(i);
             System.out.println((i+1)+". "+agenda.getTitulo()+" - "+agenda.obtemData()+agenda.getHorario().toString());
             System.out.println("_______________________________________________________________________________\n");
-        }
-    }
-
-    public static void retornaTodasOsHorarios (){
-
-        for (int i = 0; i < lista.size(); i++) {
-            AgendaAtributos agenda = lista.get(i);
-
-            System.out.println(agenda.getHorario().relacaoHorarios());
         }
     }
 
@@ -259,5 +270,14 @@ public class Main {
     		return false;
     	
     	return true;
+    }
+
+    public static void retornaTodasOsHorarios (){
+
+        for (int i = 0; i < lista.size(); i++) {
+            AgendaAtributos agenda = lista.get(i);
+
+            System.out.println(agenda.getHorario().relacaoHorarios());
+        }
     }
 }

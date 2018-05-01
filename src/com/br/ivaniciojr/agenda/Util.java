@@ -9,17 +9,17 @@ import java.util.*;
 
 public class Util {
 
-    public void screen(){
+    public static void screen(){
         System.out.println("=====================================================================");
         System.out.println("MINHA AGENDA");
-        System.out.println("Hoje, "+this.exibeData());
+        System.out.println("Hoje, "+exibeData());
         System.out.println("---------------------------------------------------------------------");
         System.out.println("O que deseja fazer?\n");
         System.out.println("1. Agendar um compromisso\n2. Cancelar um compromisso\n3. Ver meus compromissos\n4. Sair da agenda");
         System.out.println("=====================================================================\n");
     }
 
-    public String exibeData (){
+    public static String exibeData (){
 
         Date data = new Date();
         StringBuilder s = new StringBuilder();
@@ -41,7 +41,7 @@ public class Util {
         return s.toString();
     }
 
-    public boolean validaData (String data){
+    public static boolean validaData (String data){
         // Referência a https://docs.oracle.com/javase/tutorial/datetime/iso/format.html
         try {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
