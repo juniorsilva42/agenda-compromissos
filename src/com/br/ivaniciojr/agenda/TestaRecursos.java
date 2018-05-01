@@ -10,7 +10,16 @@ import java.util.logging.Logger;
 public class TestaRecursos {
 
     public static void main(String[] args) throws ParseException {
-        SimpleDateFormat formatador = new SimpleDateFormat("HH:mm");
+    	
+    	System.out.println("\nCOMPROMISSOS DISPONÍVEIS");
+    	System.out.print("-------------------------------------------------------------------------------\n");
+        for (int i = 0; i < 5; i++) {
+        	System.out.println((i+1)+". Titulo do compromisso - 29/09/1998 das 10:30 às 11:30");
+            System.out.println("_______________________________________________________________________________\n");
+        }
+    	
+    }
+      /*  SimpleDateFormat formatador = new SimpleDateFormat("HH:mm");
 
         String[] horarioCompromissoAgora = { "10:30", "11:30" };
         String[] listaDeHorarios = { "11:30", "12:30", "10:11", "15:30"};
@@ -42,6 +51,6 @@ public class TestaRecursos {
 
         }
     }
-
+*/
 
 }

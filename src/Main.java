@@ -18,7 +18,7 @@ public class Main {
         util.screen();
 
         do {
-
+        	
             System.out.println("\nDigite uma opção correspondente acima: ");
             opcao = in.nextInt();
 
@@ -34,20 +34,26 @@ public class Main {
                     break;
 
                 case 2:
-
-                    System.out.println("Qual compromisso deseja remover?");
-                    opcao = in.nextInt();
-                    opcao = opcao - 1;
-
-                    // Limpa o buffer do teclado
+                
                     Util.limpaBuffer(in);
-                    removeCompromisso(opcao);
+                    
+                	if (verificaCompromissos()) {
+                		System.out.println("\nAinda não há compromissos na sua agenda.\nAdicione um digitando opção correspondente no menu.\n");
+                	} else {
+                    	exibeCompromissosLite();
+                    	
+                        System.out.println("\nQual compromisso deseja remover?");
+                        opcao = in.nextInt();
+                        opcao = opcao - 1;
 
+                        removeCompromisso(opcao);	
+                	}
+                	
                     break;
 
                 case 3:
-                    //exibeCompromissos();
-                    retornaTodasOsHorarios();
+                    exibeCompromissos();
+                    // retornaTodasOsHorarios();
                     break;
 
                 case 4:
@@ -159,12 +165,13 @@ public class Main {
          * Persiste o compromisso à lista
          *
          * */
-        if (lista.add(agenda))
-            System.out.println("\nCompromisso adicionado com sucesso!");
-        else
+        if (lista.add(agenda)) {
+            System.out.print("\n-----------------------------------------------------------------------");
+            System.out.println("\nOK! \""+agenda.getTitulo()+"\" foi agendado para "+agenda.obtemData()+""+agenda.getHorario().toString()+"");
+            System.out.println("-----------------------------------------------------------------------");
+         } else {
             System.out.println("Erro ao adicionar um novo compromisso!");
-
-        exibeUltimoCompromisso();
+         }
     }
 
     public static void exibeCompromissos (){
@@ -193,9 +200,10 @@ public class Main {
                 System.exit(0);
 
         } else {
+            System.out.println("SEUS COMPROMISSOS");
             for (int i = 0; i < lista.size(); i++) {
                 AgendaAtributos agenda = lista.get(i);
-                System.out.print("-----------------------------------------------");
+                System.out.print("\n-----------------------------------------------\n");
                 System.out.println("\nTítulo: "+agenda.getTitulo());
                 System.out.println("Descrição: "+agenda.getDescricao());
                 System.out.println("Data: "+agenda.obtemData());
@@ -205,26 +213,28 @@ public class Main {
         }
     }
 
-    public static void exibeUltimoCompromisso (){
-        int tamanhoLista = lista.size()-1;
-        AgendaAtributos agenda = lista.get(tamanhoLista);
-
-        System.out.print("\n|-----------------------------------------------------------|");
-        System.out.println("\n|\tNovo compromisso em "+agenda.obtemData()+""+agenda.getHorario().toString()+" \t\t|");
-        System.out.println("|-----------------------------------------------------------|");
-    }
-
     public static void removeCompromisso (int indice){
         int tamanhoLista = lista.size();
-
-        for (int i = 0; i < tamanhoLista; i++) {
-            AgendaAtributos agenda = lista.get(i);
-            System.out.print("-----------------------------------------------");
-            System.out.println("\nCompromisso: "+agenda.getTitulo());
-            System.out.println("-----------------------------------------------");
-        }
-
+        
         System.out.println("Quero remover este: "+lista.get(indice).getTitulo());
+        
+        if ((indice > tamanhoLista-1)) {
+        	System.out.println("Este elemento não existe");
+        } else {
+        	lista.remove(indice);
+        	System.out.println("Compromisso removido com sucesso!");
+        }
+        
+    }
+    
+    public static void exibeCompromissosLite() {
+    	System.out.println("\nCOMPROMISSOS DISPONÍVEIS");
+    	System.out.print("-------------------------------------------------------------------------------\n");
+        for (int i = 0; i < lista.size(); i++) {
+            AgendaAtributos agenda = lista.get(i);
+            System.out.println((i+1)+". "+agenda.getTitulo()+" - "+agenda.obtemData()+agenda.getHorario().toString());
+            System.out.println("_______________________________________________________________________________\n");
+        }
     }
 
     public static void retornaTodasOsHorarios (){
@@ -234,5 +244,13 @@ public class Main {
 
             System.out.println(agenda.getHorario().relacaoHorarios());
         }
+    }
+
+    public static boolean verificaCompromissos () {
+    	// Caso seja vazia
+    	if (lista.size() == 0)
+    		return true;
+    	
+    	return false;
     }
 }
