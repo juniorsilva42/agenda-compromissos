@@ -1,4 +1,7 @@
-/bin/
+/bin
+/out
+/build
+.idea
 .classpath
 .project
-/build
+*.iml

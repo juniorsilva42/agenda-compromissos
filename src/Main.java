@@ -37,12 +37,16 @@ public class Main {
                 
                     Util.limpaBuffer(in);
                     
-                	if (verificaCompromissos()) {
-                		System.out.println("\nAinda não há compromissos na sua agenda.\nAdicione um digitando opção correspondente no menu.\n");
+                	if (!verificaCompromissos()) {
+                		System.out.println("\nAinda não há compromissos na sua agenda.\nAdicione um digitando a opção correspondente no menu (1).\n");
                 	} else {
                     	exibeCompromissosLite();
-                    	
-                        System.out.println("\nQual compromisso deseja remover?");
+
+                    	/*
+                    	*
+                    	* Note que, visualmente, é exibido uma lista númerica crescente como opções para o usuário escolher qual comprimisso quer deletar, mas, por trás, é decrementado um da opção a qual ele passa para poder trabalhar com coerência com os índices do array e assim, posteriomente, passar para o argumento da função de remover um compromisso.
+                    	* */
+                        System.out.println("Qual compromisso deseja cancelar?");
                         opcao = in.nextInt();
                         opcao = opcao - 1;
 
@@ -53,7 +57,6 @@ public class Main {
 
                 case 3:
                     exibeCompromissos();
-                    // retornaTodasOsHorarios();
                     break;
 
                 case 4:
@@ -174,61 +177,57 @@ public class Main {
          }
     }
 
-    public static void exibeCompromissos (){
 
-        int tamanhoLista = lista.size();
+    public static void exibeCompromissos (){
 
         /*
         *
         * Verifica a existência de um compromisso na lista, caso não exista, oferece a opção de criar um.
         *
         **/
-        if (tamanhoLista == 0){
-            System.out.println("\nAinda não há compromissos.");
-            System.out.println("Deseja adicionar um novo compromisso? (s/n)");
-            String opt;
-
-            Util.limpaBuffer(in);
-            opt = in.nextLine();
-
-            System.out.print("\n");
-
-            if (opt.equalsIgnoreCase("s"))
-                addCompromisso();
-            else
-                System.out.println("Saindo...");
-                System.exit(0);
+        if (!verificaCompromissos()){
+            System.out.println("\nAinda não há compromissos na sua agenda.\nAdicione um digitando a opção correspondente no menu (1).\n");
 
         } else {
-            System.out.println("SEUS COMPROMISSOS");
+            System.out.println("\nSEUS COMPROMISSOS");
+            System.out.print("-------------------------------------------------------------------------------\n");
             for (int i = 0; i < lista.size(); i++) {
                 AgendaAtributos agenda = lista.get(i);
-                System.out.print("\n-----------------------------------------------\n");
-                System.out.println("\nTítulo: "+agenda.getTitulo());
+                System.out.println("Título: "+agenda.getTitulo());
                 System.out.println("Descrição: "+agenda.getDescricao());
                 System.out.println("Data: "+agenda.obtemData());
-                System.out.println("Horário: "+agenda.getHorario().toString());
-                System.out.println("-----------------------------------------------");
+                System.out.println("Horário:"+agenda.getHorario().toString());
+                System.out.println("_______________________________________________________________________________\n");
             }
         }
     }
 
+    /*
+     *
+     * Remove um compromisso da lista
+     *
+     * @return: void
+     * @params: int indice
+     * @annotations: remove o item da lista pelo índice informado pelo usuário;
+     *
+     * */
     public static void removeCompromisso (int indice){
+        // recalculando o tamanho da lista
         int tamanhoLista = lista.size();
-        
+
         System.out.println("Quero remover este: "+lista.get(indice).getTitulo());
-        
-        if ((indice > tamanhoLista-1)) {
+
+        // Verifica se o índice passado é maior do que o tamanho da lista, caso seja, o elemento ultrapassa o limite.
+        if ((indice > tamanhoLista)) {
         	System.out.println("Este elemento não existe");
         } else {
         	lista.remove(indice);
         	System.out.println("Compromisso removido com sucesso!");
         }
-        
     }
     
     public static void exibeCompromissosLite() {
-    	System.out.println("\nCOMPROMISSOS DISPONÍVEIS");
+    	System.out.println("\nSEUS COMPROMISSOS");
     	System.out.print("-------------------------------------------------------------------------------\n");
         for (int i = 0; i < lista.size(); i++) {
             AgendaAtributos agenda = lista.get(i);
@@ -246,11 +245,19 @@ public class Main {
         }
     }
 
+    /*
+    *
+    * Verifica se há compromissos na lista
+    *
+    * @return: boolean
+    * @annotations: retorna false caso não exista nada na lista, e true caso a condição não seja satisfeita e haja prosseguimento no bloco
+    *
+    * */
     public static boolean verificaCompromissos () {
-    	// Caso seja vazia
+
     	if (lista.size() == 0)
-    		return true;
+    		return false;
     	
-    	return false;
+    	return true;
     }
 }
