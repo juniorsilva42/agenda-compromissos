@@ -9,6 +9,11 @@ import java.util.*;
 
 public class Util {
 
+    /*
+     *
+     * Procedimento que exibe o menu do usuário
+     *
+     */
     public static void screen(){
         System.out.println("=====================================================================");
         System.out.println("MINHA AGENDA");
@@ -52,6 +57,13 @@ public class Util {
         }
     }
 
+    /*
+     *
+     * Método helper para validar a entrada (se vazio ou não) de strings pelo usuário
+     * @return boolean
+     * @params String s
+     *
+     */
     public static boolean validaString (String s){
         if(s == null || s.isEmpty())
             return false;
@@ -59,6 +71,13 @@ public class Util {
         return true;
     }
 
+    /*
+     *
+     * Método helper para validar o horário
+     * @return boolean
+     * @params String horario
+     *
+     */
     public static boolean validaHorario (String horario) {
 
         String[] arranjo = horario.split(":");
@@ -77,19 +96,20 @@ public class Util {
          *
          * Percorro todos os caracteres da string e passo um a um mediante a variável itensHorario, com isso, posso verificar se o horário é do tipo 00:00, com a ajuda de uma var auxiliar: "contador".
          *
-         *
          */
         for (char itensHorario: arranjoQuebrado) {
 
+            // Para cada ":" encontrado, ele incremente o contador.
             if (itensHorario == ':') {
                 contador++;
-                continue;
+                continue; // continua a iteração para verificar se é um numero e n um caractere
             }
 
             if (!Character.isDigit(itensHorario))
                 return false;
         }
 
+        // Verifica a quantidade de ":" no horário, para a condição ser satisfeita, tem que estar entre 1 e 2
         if (contador < 1 || contador >= 3)
             return false;
         else if (horas < 0 || horas > 23)
@@ -100,8 +120,12 @@ public class Util {
         return true;
     }
 
+    /*
+     *
+     * Procedimento Helper que limpa o buffer do teclado
+     *
+     */
     public static void limpaBuffer (Scanner in){
         in.nextLine();
     }
-
 }

@@ -61,7 +61,7 @@ public class Main {
                     	* Note que, visualmente, é exibido uma lista númerica crescente com opções para o usuário escolher qual compromisso quer deletar, mas, por trás dos panos, é decrementado uma unidade da opção a qual ele passa na opção, para assim poder trabalhar com coerência na manipulação dos índices do array e, posteriomente, passar para o argumento da função de remover um compromisso.
                     	*
                     	* */
-                        System.out.println("Qual compromisso deseja cancelar?");
+                        System.out.println("Qual compromisso deseja cancelar? (digite a opção numérica correspondente)");
                         opcao = in.nextInt();
                         opcao = opcao - 1;
 
@@ -110,6 +110,7 @@ public class Main {
         // Variáveis de controle de erros
         boolean validadeDeHorario = true;
         boolean validadeDeData = true;
+        boolean erro = false;
 
         /*
          *
@@ -121,13 +122,16 @@ public class Main {
 
         if (Util.validaString(titulo))
             agenda.setTitulo(titulo);
+        else
+            erro = true;
 
         System.out.println("\nPasso 2/4\nDescrição do compromisso:");
         descricao = in.nextLine();
 
         if (Util.validaString(descricao))
             agenda.setDescricao(descricao);
-
+        else
+            agenda.setDescricao("** sem descrição **");
         /*
          *
          * Lê a data no formato dd/mm/yyyy
@@ -177,12 +181,20 @@ public class Main {
                  validadeDeHorario = false;
         }
 
-        // Valida de forma uniciada, o formato de entrada da data e do horário
-        if (!validadeDeData){
-            System.out.println("\nNão foi possível adicionar seu compromisso.\nHora inválida!");
-        } else if (!validadeDeHorario) {
-            System.out.println("\nNão foi possível adicionar seu compromisso.\nHorário inválido!");
-        } else {
+        /*
+        *
+        * Verfica se há erros em cada elemento.
+        *
+        * */
+        if (erro)
+            // verifica se existe um titulo
+            System.out.println("\nNão foi possível adicionar seu compromisso.\nDigite pelo menos um título!");
+        else if (!validadeDeData)
+            // Valida de forma uniciada, o formato de entrada da data e do horário
+            System.out.println("\nNão foi possível adicionar seu compromisso.\nO formato da data está inválida!\nDigite uma data no formato dd/mm/yyyy");
+        else if (!validadeDeHorario)
+            System.out.println("\nNão foi possível adicionar seu compromisso.\nO formato do horário está inválido!\nDigite um horário no formato 00:00");
+        else {
             /*
              *
              * Persiste o compromisso à lista

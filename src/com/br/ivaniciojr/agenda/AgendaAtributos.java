@@ -51,7 +51,9 @@ public class AgendaAtributos {
 
     /*
      *
-     * Exibição
+     * Método para deixar enxuta a exibição da data, isso evita ter que ficar repetindo
+       o uso de agenda.getData().getData(), isso deixava o cód. confuso, com isso, uso apenas
+       agenda.obtemData(), onde por trás, este método opera o getter respectivo
      *
      * */
     public String obtemData () {
