@@ -58,7 +58,7 @@ public class Main {
 
                     	/*
                     	*
-                    	* Note que, visualmente, é exibido uma lista númerica crescente com opções para o usuário escolher qual compromisso quer deletar, mas, por trás dos panos, é decrementado uma unidade da opção a qual ele passa na opção, para assim poder trabalhar com coerência na manipulação dos índices do array e, posteriomente, passar para o argumento da função de remover um compromisso.
+                    	* Note que, visualmente, é exibido uma lista númerica crescente com opções para o usuário escolher qual compromisso quer deletar, mas, por trás dos panos, é decrementado uma unidade da opção a qual ele passa digita, para assim poder trabalhar com coerência na manipulação dos índices do array e, posteriomente, passar para o argumento da função de remover um compromisso.
                     	*
                     	* */
                         System.out.println("Qual compromisso deseja cancelar? (digite a opção numérica correspondente)");
