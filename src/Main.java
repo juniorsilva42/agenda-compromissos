@@ -212,24 +212,44 @@ public class Main {
 
     public static void exibeCompromissos (){
 
+
+
         /*
         *
         * Verifica a existência de um compromisso na lista, caso não exista, oferece a opção de criar um.
         *
         **/
+
         if (!verificaCompromissos()){
             System.out.println("\nAinda não há compromissos na sua agenda.\nAdicione um digitando a opção correspondente no menu (1).\n");
 
         } else {
-            System.out.println("\nSEUS COMPROMISSOS");
+            int exibeMensagem = 1;
+
+            System.out.println("\nSEUS COMPROMISSOS PARA HOJE "+Util.exibeDataAtual());
             System.out.print("-------------------------------------------------------------------------------\n");
             for (int i = 0; i < lista.size(); i++) {
                 AgendaAtributos agenda = lista.get(i);
-                System.out.println("Título: "+agenda.getTitulo());
-                System.out.println("Descrição: "+agenda.getDescricao());
-                System.out.println("Data: "+agenda.obtemData());
-                System.out.println("Horário:"+agenda.getHorario().toString());
-                System.out.println("_______________________________________________________________________________\n");
+
+                if (agenda.obtemData().equalsIgnoreCase(Util.exibeDataAtual())){
+                    System.out.println("Título: "+agenda.getTitulo());
+                    System.out.println("Descrição: "+agenda.getDescricao());
+                    System.out.println("Data: "+agenda.obtemData());
+                    System.out.println("Horário:"+agenda.getHorario().toString());
+                    System.out.println("_______________________________________________________________________________\n");
+                } else {
+                    if (exibeMensagem == 1) {
+                        System.out.println("\nDEMAIS DIAS");
+                        System.out.print("-------------------------------------------------------------------------------\n");
+                        exibeMensagem++;
+                    }
+
+                    System.out.println("Título: "+agenda.getTitulo());
+                    System.out.println("Descrição: "+agenda.getDescricao());
+                    System.out.println("Data: "+agenda.obtemData());
+                    System.out.println("Horário:"+agenda.getHorario().toString());
+                    System.out.println("_______________________________________________________________________________\n");
+                }
             }
         }
     }

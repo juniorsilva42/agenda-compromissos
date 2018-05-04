@@ -128,4 +128,12 @@ public class Util {
     public static void limpaBuffer (Scanner in){
         in.nextLine();
     }
+
+    public static String exibeDataAtual (){
+        Date dataObj = new Date();
+        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+        String dataAtual = formato.format(dataObj);
+
+        return dataAtual;
+    }
 }
